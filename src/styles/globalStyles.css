@@ -33,6 +33,7 @@ body {
   width: 100vw;
   height: 100vh;
   background-color: var(--color-grey-4);
+  
 }
 
 
@@ -49,4 +50,7 @@ body {
     --title-3: calc(2rem / 1.2);
     --text-1:  calc(1.125rem / 1.2);
   }
+}
+button,i{
+  cursor: pointer;
 }

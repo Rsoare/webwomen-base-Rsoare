@@ -72,7 +72,7 @@
     color: var(--color-grey-1);
     margin: 1rem 0;
 }
-.list--container{
+.list__container{
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -206,7 +206,7 @@
         width: 44rem;
     }
 
-    .list--container{
+    .list__container{
         width: 30rem;
     }
 
@@ -231,7 +231,7 @@
 } 
 
 @media screen and (min-width: 1025px){
-    .list--container{
+    .list__container{
         width: 50rem;
     }
 }

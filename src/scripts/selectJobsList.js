@@ -1,65 +1,65 @@
-
-function getLocalStorageList() {
-    return JSON.parse(localStorage.getItem('@webwomen:jobsList'))
+function salveLocalStorage(item) {
+    const localStorage1 = localStorage.setItem('@webwomen:selectList', JSON.stringify(item))
+    return localStorage1
 }
 
 
-function SelectJobs(listJobs) {
-    const ulAside = document.querySelector(".aside__list--container")
-    const buttonsAddJobs = document.querySelectorAll(".item__button")
-    const getJobslistLocal = JSON.parse(localStorage.getItem('@kenzieBook:favBooks')) || []
 
-    buttonsAddJobs.forEach(button => {
+function localStorageArray(jobSelect) {
+    
+    const localStorage0 = JSON.parse(localStorage.getItem('@webwomen:selectList')) || []
 
-        button.addEventListener('click', (event) => {
+    localStorage0.push(jobSelect)
 
-            const jobSelect = listJobs.find(job => job.id === Number(event.target.dataset.id))
+    renderClickJobsList(localStorage0)
 
-            getJobslistLocal.push(jobSelect)
+    salveLocalStorage(localStorage0)
 
-            localStorage.setItem('@kenzieBook:favBooks', JSON.stringify(getJobslistLocal))
 
-            const setJobsRender = createSelectJobs(jobSelect)
-            ulAside.appendChild(setJobsRender)
-
-        })
-    })
-    renderJobs(getJobslistLocal)
-    removeSelectJobs(getJobslistLocal)
 }
 
-function renderJobs(listJobs) {
-    const ulAside = document.querySelector(".aside__list--container")
 
-    listJobs.forEach(job => {
+
+function renderClickJobsList(Jobslist) {
+
+    const ulAside = document.querySelector('.aside__list--container')
+
+    ulAside.innerHTML = ""
+
+    Jobslist.forEach(job => {
+
         const renderJob = createSelectJobs(job)
+
         ulAside.appendChild(renderJob)
     });
 }
 
+function renderJobsList() {
+    const localStorage0 = JSON.parse(localStorage.getItem('@webwomen:selectList')) || []
+    renderClickJobsList(localStorage0)
+}
 
-function removeSelectJobs(jobsList) {
-    const removeButton = document.querySelectorAll(".fa-trash")
-    const liRemove = document.querySelectorAll(".aside__list--item")
+function removeJobsList(idButton) {
+    const localStorage0 = JSON.parse(localStorage.getItem('@webwomen:selectList')) || []
 
-    removeButton.forEach((button, index) => {
-        button.addEventListener('click', (event) => {
+    const buttons = document.querySelectorAll('.item__button')
 
-            jobsList.filter(job => {
-                if (job.id === Number(event.target.dataset.id)) {
-                    liRemove[index].remove()
+    const liFavorite = document.querySelectorAll('.aside__list--item')
 
-                    const indexJobs = jobsList.indexOf(job)
+    const indexJobs = localStorage0.findIndex(job => job.id == idButton)
 
-                    jobsList.splice(indexJobs, 1)
+    localStorage = localStorage0.splice(indexJobs, 1)
 
+    liFavorite.forEach(li => {
+        const liId = li.dataset.id
 
-                    localStorage.setItem('@kenzieBook:favBooks', JSON.stringify(jobsList))
+        if (liId == idButton) {
 
-                }
-            })
-        })
-    });
+            li.remove()
+        }
+    })
+
+    salveLocalStorage(localStorage0)
 }
 
 function createSelectJobs(favoriteList) {
@@ -83,13 +83,29 @@ function createSelectJobs(favoriteList) {
 
     iconFavorite.dataset.id = favoriteList.id
 
+    liFavorite.dataset.id = favoriteList.id
+
     divTitleFavorite.append(h2Favorite, iconFavorite)
     divCityFavorite.append(spanFavorite0, spanFavorite1)
 
-
     liFavorite.append(divTitleFavorite, divCityFavorite)
+
+    iconFavorite.addEventListener('click', (event) => {
+        const buttonList = document.querySelectorAll('.item__button--remove')
+
+        const buttonId = event.target.dataset.id
+
+        buttonList.forEach(button => {
+            if (button.dataset.id == buttonId) {
+                button.innerText = 'Candidatar'
+                button.classList.toggle('item__button')
+                button.classList.toggle('item__button--remove')
+            }
+        })
+        removeJobsList(buttonId)
+    })
 
     return liFavorite
 }
 
-SelectJobs(getLocalStorageList())
+renderJobsList()

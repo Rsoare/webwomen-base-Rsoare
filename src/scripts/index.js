@@ -5,7 +5,6 @@ function renderLists(jobs) {
         const createList = createLists(job)
         ulLists.appendChild(createList)
     })
-    localStorage.setItem('@webwomen:jobsList',JSON.stringify(jobs))
 }
 
 function createLists(jobs) {
@@ -47,7 +46,6 @@ function createLists(jobs) {
     divListCity.append(spanCityList0, spanCityList1)
     divListTag.append(spanTagList0, spanTagList1)
     liList.append(h2List, divListCity, pList, divListTag, buttonList)
-
 
     return liList
 }
